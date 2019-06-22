@@ -2,6 +2,19 @@
 
 Uses Binary Particle Swarm Optimization (BPSO) to solve the Unit Commitment Problem in the context of electric power generation in an idealized microgrid.
 
+- [Unit Commitment Problem Statement](#unit-commitment-problem-statement)
+- [Microgrid Model](#microgrid-model)
+  - [Microgrid State](#microgrid-state)
+  - [Battery](#battery)
+  - [Generators](#generators)
+  - [Simplifications compared to reality](#simplifications)
+- [Operation](#operation)
+- [BPSO](#bpso)
+- [PSO Visualizations](#pso-visualizations)
+  - [Radar](#radar)
+  - [Schedule Map](#schedule-map)
+  - [Convergence](#convergence)
+
 Features:
 - Good performance BPSO implementation with bitwise operations.
 - Premature convergence detection and correction in the form of particle craziness.
@@ -55,7 +68,7 @@ The thermal generators are modelled as having:
 - Minimum uptime. The amount of minutes the generator has to stay on before being free to be switched off.
 - Minimum downtime. The amount of minutes the generator has to stay off before being free to be switched on.
 
-### Simplifications compared to reality
+### Simplifications
 - Generators can vary their power output instantly, by any amount, as long as they're already on.
 - All generations have a minimum power output of zero.
 - Prices are known for the entire day, but buying and selling is done as if on a realtime market. This best resembles working based off of a realtime market 24h prediction.
@@ -65,15 +78,11 @@ The thermal generators are modelled as having:
 
 ## Operation
 
-Renewable energy is used first. Excess renewable energy is stored in the battery. Conversely shortages are made up by drawing power from the battery. 
-
-Afterwards, any remaining demand has to be met either with electricity from the thermal generators or from imports.
-
-The state of the grid, market prices and remaining local demand are fed into the Unit Commitment PSO algorithm that outputs the closest-to-optimal generator schedules it could find.
-
-The generator schedules are fed into an algorithm that solves Economic Dispatch. The goal of this algorithm is to balance the load between all the online generators in a way that maximizes profit. The algorithm outputs the best generator production curves it could find.
-
-The generator production curves are used to determine the full state of the microgrid, computing total cost and energy exchange and the execution ends.
+1. Renewable energy is used first. Excess renewable energy is stored in the battery. Conversely shortages are made up by drawing power from the battery. 
+2. Any remaining demand has to be met either with electricity from the thermal generators or from imports.
+3. The state of the grid, market prices and remaining local demand are fed into the Unit Commitment PSO algorithm that outputs the closest-to-optimal generator schedules it could find.
+4. The generator schedules are fed into an algorithm that solves Economic Dispatch. The goal of this algorithm is to balance the load between all the online generators in a way that maximizes profit. The algorithm outputs the best generator production curves it could find.
+5. The generator production curves are used to determine the full state of the microgrid, computing total cost and energy exchange.
 
 ## BPSO
 
@@ -84,24 +93,24 @@ The search space is modelled as having one time dimension and n binary dimension
 The solution to the UC problem is a position that has the smallest cost. This cost is used as the fitness associated to a position.
 
 Particles have:
-- A position ``p``.
-- A velocity ``v``.
-- The fitness of the best position they've found so far ``PBestFitness``.
-- The best position they've found so far ``PBest``.
+- **A position ``p``**.
+- **A velocity ``v``**.
+- The fitness of the best position they've found so far **``PBestFitness``**.
+- The best position they've found so far **``PBest``**.
 
 Additionally the swarm stores:
-- The fitness of the global best position ``GBestFitness``.
-- The best position found by the entire swarm so far ``GBest``.
+- The fitness of the global best position **``GBestFitness``**.
+- The best position found by the entire swarm so far **``GBest``**.
 
-The BPSO algorithm utilizes a simple PBest/GBest topology where each particle tracks their personal best, the swarm tracks the global best and particles are attracted both towards their PBest and the swarm's GBest. 
+The BPSO algorithm utilizes a simple **PBest/GBest topology** where each particle tracks their personal best, the swarm tracks the global best and particles are attracted both towards their PBest and the swarm's GBest. 
 
 At every iteration a new velocity is calculated for the particles. The new position is obtained by XORing the current position with the new velocity.
 
 In the velocity calculation a few factors come into play:
-- There's a probability ``w`` to take the previous velocity into consideration by ORing it to the rest of the equation. This approximates how continuous space inertia works in a binary space.
+- There's an **inertial probability ``w``** to take the previous velocity into consideration by ORing it to the rest of the equation. This approximates how continuous space inertia works in a binary space.
 - A random amount of bits are switched to move the particle towards to PBest.
 - A random amount of bits are switched to move the particle towards to GBest.
-- There's a ``c`` probability to XOR random noise into the velocity calculation. This is the craziness probability, which goes up with each iteration that hasn't lead to a GBest update.
+- There's a **craziness probability ``c``** to XOR random noise into the velocity calculation. ``c`` goes up with each iteration that hasn't lead to a GBest update.
 
 Notice that since we're in a binary space the magnitude of velocity is represented as a random bitmask that controls how many bits switch at a time. The particle doesn't instantly move to PBest or GBest because a random bitmask forces the change to happen to only some bits every iteration.
 
