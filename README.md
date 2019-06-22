@@ -13,20 +13,21 @@ Features:
 - Importing and exporting of data as .csv files.
 
 ## Table of Contents
-- [Unit Commitment Problem Statement](#unit-commitment-problem-statement)
-- [Microgrid Model](#microgrid-model)
-  - [Microgrid State](#microgrid-state)
-  - [Battery](#battery)
-  - [Generators](#generators)
-  - [Simplifications compared to reality](#simplifications)
-- [Operation](#operation)
-- [BPSO](#bpso)
-- [PSO Visualizations](#pso-visualizations)
-  - [Radar](#radar)
-  - [Schedule Map](#schedule-map)
-  - [Convergence](#convergence)
+- [1. Unit Commitment Problem Statement](#1-unit-commitment-problem-statement)
+- [2. Microgrid Model](#2-microgrid-model)
+  - [2.1. Microgrid State](#21-microgrid-state)
+  - [2.2. Battery](#22-battery)
+  - [2.3. Generators](#generators)
+  - [2.4. Simplifications](#simplifications)
+- [3. Operation](#operation)
+- [4. BPSO](#bpso)
+- [5. PSO Visualizations](#pso-visualizations)
+  - [5.1. Radar](#radar)
+  - [5.2. Schedule Map](#schedule-map)
+  - [5.3. Convergence](#convergence)
+ - [6. Building](#building)
 
-## Unit Commitment Problem Statement
+## 1. Unit Commitment Problem Statement
 
 Given a microgrid that:
 - Is connected to the main grid where energy can be imported or exported at market prices.
@@ -37,7 +38,7 @@ Find the schedule (on/off states at each time step) for the generators that will
 
 The Big O complexity of an exhaustive search is `O(2^(n*t))` where `n` is the number of generators and `t` is the number of time steps. For 3 generators and 24 time steps, the number of possible configuration is ~4.7 sexdecillions. Another way to think about it is that it exceeds the storage capacity of an Int32 by roughly 1 trillion times. Many of these states are invalid because they violate the minimum uptime and minimum downtime constraints, which effectively define how quickly a generator can be toggled.
 
-## Microgrid Model
+## 2. Microgrid Model
 
 The microgrid is modelled as having idealized:
 - Renewable energy sources. Wind and solar power.
@@ -45,7 +46,7 @@ The microgrid is modelled as having idealized:
 - Point of common coupling (PCC) with the main grid.
 - Heterogenous thermal generators that can be switched on and off.
 
-### Microgrid State
+### 2.1. Microgrid State
 The state of the microgrid is composed of the following variables:
 - A local power demand curve. Measured in MW.
 - Wind and solar power generation curves. Measured in MW.
@@ -55,21 +56,21 @@ The state of the microgrid is composed of the following variables:
 - Generator schedules, one for each generator. Defines the on and off states of the generators at each point in time.
 - Generator production curves, one for each generator. Defines how much power a generator is outputting at each point in time.
 
-### Battery
+### 2.2. Battery
 The battery system is modelled as having:
 - A total storage capacity measured in MWh.
 - A maximum power it can export or import measured in MW.
 - An initial state of charge (SoC). The SoC the battery starts with at t = 0.
 - A minimum and maximum SoC.
 
-### Generators
+### 2.3. Generators
 The thermal generators are modelled as having:
 - A maximum power they can generate measured in MW.
 - Cost coefficients a, b, c that define the curve of the quadratic cost equation a*P^2 + b*P + c.
 - Minimum uptime. The amount of minutes the generator has to stay on before being free to be switched off.
 - Minimum downtime. The amount of minutes the generator has to stay off before being free to be switched on.
 
-### Simplifications
+### 2.4. Simplifications
 - Generators can vary their power output instantly, by any amount, as long as they're already on.
 - All generations have a minimum power output of zero.
 - Prices are known for the entire day, but buying and selling is done as if on a realtime market. This best resembles working based off of a realtime market 24h prediction.
@@ -77,7 +78,7 @@ The thermal generators are modelled as having:
 - Reactive power considerations are ignored.
 - Excess renewable power is ignored as if renewable sources could instantly reduce their output or dump it.
 
-## Operation
+## 3. Operation
 
 1. Renewable energy is used first. Excess renewable energy is stored in the battery. Conversely shortages are made up by drawing power from the battery. 
 2. Any remaining demand has to be met either with electricity from the thermal generators or from imports.
@@ -85,7 +86,7 @@ The thermal generators are modelled as having:
 4. The generator schedules are fed into an algorithm that solves Economic Dispatch. The goal of this algorithm is to balance the load between all the online generators in a way that maximizes profit. The algorithm outputs the best generator production curves it could find.
 5. The generator production curves are used to determine the full state of the microgrid, computing total cost and energy exchange.
 
-## BPSO
+## 4. BPSO
 
 The search space is modelled as having one time dimension and n binary dimensions (one for each thermal generator). As a result, a position in this search space is represented as an array of binary integers where each row of binary integers corresponds to the on/off states of the generators at that particular time step. 
 
@@ -115,9 +116,9 @@ In the velocity calculation a few factors come into play:
 
 Notice that since we're in a binary space the magnitude of velocity is represented as a random bitmask that controls how many bits switch at a time. The particle doesn't instantly move to PBest or GBest because a random bitmask forces the change to happen to only some bits every iteration.
 
-## PSO Visualizations
+## 5. PSO Visualizations
 
-### Radar
+### 5.1. Radar
 
 ![Radar Screenshot](https://github.com/Anvoker/MicrogridPSO/blob/master/gh/radars.png)
 
@@ -131,7 +132,7 @@ The value along that axis represents the amount of particles that "think" the ge
 
 A slider controls which iteration is being currently viewed. By using the slider we can see how the positions change over time.
 
-### Schedule Map
+### 5.2. Schedule Map
 ![Schedule Map](https://github.com/Anvoker/MicrogridPSO/blob/master/gh/schedulemap.png)
 
 Best used to visualize changes in the generator schedule from iteration to iteration.
@@ -142,11 +143,11 @@ A schedule row contains one schedule cell for each generator.
 
 A schedule cell is a barcode image that represents the on off states of a generator over a 24h period. If a colored bar is drawn at a certain hour, then the generator is on. If the space is empty (white) then the generator is off.
 
-### Convergence
+### 5.3. Convergence
 
 Simple 2D graph of best fitness over time. Very good for identifying when the swarm is trapped in a local minima.
 
-## Building
+## 6. Building
 Requires Unity 2019.x and Unity 2019.3.0a5 or later for multithreaded WebGL only.
 
 Proprietary dependencies:
@@ -161,7 +162,7 @@ OSS dependencies included in the repository:
 - StringFormatter. Thanks Michael Popoloski!
 - System.Runtime.CompilerServices.Unsafe.
 
-### Roadmap
+## 7. Roadmap
 - Replace Vectrosity 5 with a OSS line drawing library.
 - Add minimum power constraint to thermal generators.
 - Implement probabilistic visualisation of high-dimensional binary data.
