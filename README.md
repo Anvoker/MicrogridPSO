@@ -2,6 +2,16 @@
 
 Uses Binary Particle Swarm Optimization (BPSO) to solve the Unit Commitment Problem in the context of electric power generation in an idealized microgrid.
 
+Features:
+- Good performance BPSO implementation with bitwise operations.
+- Premature convergence detection and correction in the form of particle craziness.
+- Running multiple BPSOs in parallel on different threads (unavailable in WebGL).
+- Takes into consideration realtime market prices.
+- Snapshot system allows visualizing the BPSO algorithm's functioning at each iteration.
+- Visualizations of the microgrid's state.
+- Ability to customize data such as load curve and generator specifications.
+- Importing and exporting of data as .csv files.
+
 - [Unit Commitment Problem Statement](#unit-commitment-problem-statement)
 - [Microgrid Model](#microgrid-model)
   - [Microgrid State](#microgrid-state)
@@ -15,16 +25,6 @@ Uses Binary Particle Swarm Optimization (BPSO) to solve the Unit Commitment Prob
   - [Schedule Map](#schedule-map)
   - [Convergence](#convergence)
 
-Features:
-- Good performance BPSO implementation with bitwise operations.
-- Premature convergence detection and correction in the form of particle craziness.
-- Running multiple BPSOs in parallel on different threads (unavailable in WebGL).
-- Takes into consideration realtime market prices.
-- Snapshot system allows visualizing the BPSO algorithm's functioning at each iteration.
-- Visualizations of the microgrid's state.
-- Ability to customize data such as load curve and generator specifications.
-- Importing and exporting of data as .csv files.
-
 ## Unit Commitment Problem Statement
 
 Given a microgrid that:
@@ -34,7 +34,7 @@ Given a microgrid that:
 
 Find the schedule (on/off states at each time step) for the generators that will lead to the minimum costs / maximum profit for the grid over a period of 24h.
 
-The Big O complexity of an exhaustive search is O(2^(n*t)) where n is the number of generators and t is the number of time steps. For 3 generators and 24 time steps, the number of possible configuration is ~4.7 sexdecillions. Another way to think about it is that it exceeds the storage capacity of an Int32 by roughly 1 trillion times. Many of these states are invalid because they violate the minimum uptime and minimum downtime constraints, which effectively define how quickly a generator can be toggled.
+The Big O complexity of an exhaustive search is `O(2^(n*t))` where `n` is the number of generators and `t` is the number of time steps. For 3 generators and 24 time steps, the number of possible configuration is ~4.7 sexdecillions. Another way to think about it is that it exceeds the storage capacity of an Int32 by roughly 1 trillion times. Many of these states are invalid because they violate the minimum uptime and minimum downtime constraints, which effectively define how quickly a generator can be toggled.
 
 ## Microgrid Model
 
@@ -118,6 +118,8 @@ Notice that since we're in a binary space the magnitude of velocity is represent
 
 ### Radar
 
+![Radar Screenshot](https://github.com/Anvoker/MicrogridPSO/blob/master/gh/radars.png)
+
 Allows us to visualize the convergence of the algorithm by showing the amount of particles whose current position or PBest defines a generator has being on or off at a certain time step.
 
 24 Radars are rendered, one for each hour of the day.
@@ -129,6 +131,7 @@ The value along that axis represents the amount of particles that "think" the ge
 A slider controls which iteration is being currently viewed. By using the slider we can see how the positions change over time.
 
 ### Schedule Map
+![Schedule Map](https://github.com/Anvoker/MicrogridPSO/blob/master/gh/schedulemap.png)
 
 Best used to visualize changes in the generator schedule from iteration to iteration.
 
