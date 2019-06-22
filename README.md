@@ -2,6 +2,8 @@
 
 Uses Binary Particle Swarm Optimization (BPSO) to solve the Unit Commitment Problem in the context of electric power generation in an idealized microgrid.
 
+## [Use in browser (WebGL)](https://anvoker.github.io/MicrogridPSO/webgl/)
+
 Features:
 - Good performance BPSO implementation with bitwise operations.
 - Premature convergence detection and correction in the form of particle craziness.
