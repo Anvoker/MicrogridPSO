@@ -51,7 +51,7 @@ namespace SSM.Grid
             var random     = new System.Random();
             int randomSeed = random.Next();
 
-            optionsPSO = new Search.PSO.Options(randomSeed, 2, 500, 48, 24);
+            optionsPSO = new Search.PSO.Options(randomSeed, 2, 180, 48, 24);
 
             ucEnumToMethod = new Dictionary<UCAlgorithms, UCMethod>()
             {

@@ -5,11 +5,11 @@
 "dataUrl": "mgpso.data.unityweb",
 "wasmCodeUrl": "mgpso.wasm.code.unityweb",
 "wasmFrameworkUrl": "mgpso.wasm.framework.unityweb",
-"wasmSymbolsUrl": "mgpso.wasm.symbols.unityweb",
 "graphicsAPI": ["WebGL 2.0","WebGL 1.0"],
 "webglContextAttributes": {"preserveDrawingBuffer": false},
 "splashScreenStyle": "Dark",
 "backgroundColor": "#808080",
+"cacheControl": {"default": "must-revalidate"},
 "developmentBuild": false,
 "multithreading": false,
 "unityVersion": "2019.3.0a5"
