@@ -12,6 +12,7 @@ Features:
 - Ability to customize data such as load curve and generator specifications.
 - Importing and exporting of data as .csv files.
 
+## Table of Contents
 - [Unit Commitment Problem Statement](#unit-commitment-problem-statement)
 - [Microgrid Model](#microgrid-model)
   - [Microgrid State](#microgrid-state)
