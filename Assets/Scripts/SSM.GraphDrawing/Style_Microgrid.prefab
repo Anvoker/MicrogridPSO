@@ -1,0 +1,119 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1067906853324936
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 224606309311770242}
+  - component: {fileID: 114036800234239586}
+  m_Layer: 5
+  m_Name: Style_Microgrid
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &224606309311770242
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1067906853324936}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &114036800234239586
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1067906853324936}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 166619214a1119b47b0b03d3955a0216, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lineStyleDefaults:
+  - lineColor: {r: 1, g: 0, b: 0, a: 1}
+    lineThickness: 2
+    lineType: 0
+    joinType: 0
+  zeroLine:
+    lineColor: {r: 0, g: 0, b: 0, a: 1}
+    lineThickness: 1
+    lineType: 0
+    joinType: 0
+  axis:
+    lineColor: {r: 0, g: 0, b: 0, a: 1}
+    lineThickness: 4
+    lineType: 0
+    joinType: 0
+  grid:
+    lineColor: {r: 0, g: 0, b: 0, a: 0.5019608}
+    lineThickness: 2
+    lineType: 0
+    joinType: 0
+  marker:
+    lineColor: {r: 0, g: 0, b: 0, a: 1}
+    lineThickness: 2
+    lineType: 0
+    joinType: 0
+  labelTextX:
+    size: 12
+    font: {fileID: 12800000, guid: 01cd679a1b9ee48bf9c546f6ce2cb97e, type: 3}
+    color: {r: 0, g: 0, b: 0, a: 1}
+    alignment: 4
+  labelTextY:
+    size: 12
+    font: {fileID: 12800000, guid: 01cd679a1b9ee48bf9c546f6ce2cb97e, type: 3}
+    color: {r: 0, g: 0, b: 0, a: 1}
+    alignment: 4
+  titleText:
+    size: 16
+    font: {fileID: 12800000, guid: 01cd679a1b9ee48bf9c546f6ce2cb97e, type: 3}
+    color: {r: 0, g: 0, b: 0, a: 1}
+    alignment: 4
+  markerText:
+    size: 11
+    font: {fileID: 12800000, guid: 01cd679a1b9ee48bf9c546f6ce2cb97e, type: 3}
+    color: {r: 0, g: 0, b: 0, a: 1}
+    alignment: 4
+  minAxis: {x: 0, y: 0}
+  maxAxis: {x: 1, y: 0}
+  minAxisXOverride: 0
+  minAxisYOverride: 0
+  maxAxisXOverride: 1
+  maxAxisYOverride: 0
+  anchorTitle: 0
+  anchorLabelX: 0
+  anchorLabelY: 0
+  pivotTitle: 7
+  pivotLabelX: 8
+  pivotLabelY: 0
+  markersHeight: 5
+  labelMult: {x: 1440, y: 1}
+  gridDist: {x: 0.125, y: 0}
+  markersDist: {x: 0.125, y: 0}
+  markerOffset: {x: -12, y: -16}
+  labelXOffset: {x: 4, y: 6}
+  labelYOffset: {x: 4, y: -3}
+  titleOffset: {x: 0, y: 13}
+  markerLabelRoundingX: 0
+  markerLabelRoundingY: 2
+  markerValueRoundingX: 1
+  markerValueRoundingY: 2
